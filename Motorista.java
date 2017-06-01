@@ -14,6 +14,7 @@ public class Motorista extends Utilizador{
     private int pontualidade;
     private int classificacao;
     private double kmsRealizados;
+    private int working;
     private ArrayList<Viagem> viagens;
     
     /**
@@ -28,13 +29,14 @@ public class Motorista extends Utilizador{
         this.viagens = new ArrayList<Viagem>();
     }
     
-    public Motorista(String codigo,String email,String nome,String pass,LocalDate dataNascimento,String morada,String manz,int pontual,int classif,double kmsRealizados,
+    public Motorista(String codigo,String email,String nome,String pass,LocalDate dataNascimento,String morada,String manz,int pontual,int classif,double kmsRealizados,int working,
                        ArrayList<Viagem> viag){
         super(codigo,email,nome,pass,dataNascimento,morada);
         this.pontualidade=pontual;
         this.classificacao=classif;
         this.kmsRealizados=kmsRealizados;
         this.carro=manz;
+        this.working=working;
         if (viag!=null){
             for(Viagem f:viag){
                 this.viagens.add(f.clone());
@@ -67,6 +69,10 @@ public class Motorista extends Utilizador{
         return this.classificacao;
     }
     
+    public int getWorking(){
+        return this.working;
+    }
+    
     public ArrayList<Viagem> getListViagem(){
        ArrayList<Viagem> vias= new ArrayList<>();
        if(viagens!=null){
@@ -91,6 +97,7 @@ public class Motorista extends Utilizador{
     
     public void pararTrab(){
         this.carro=null;
+        this.working=1;
     }
     
     public void setPontualidade(int pontual){
@@ -98,7 +105,13 @@ public class Motorista extends Utilizador{
     }
     
     public void setClassif(int classif){
-        this.classificacao=classif;
+        int n = this.viagens.size();
+        int notafinal= (int) ((this.classificacao+classif)/n);
+        this.classificacao=notafinal;
+    }
+    
+    public void setWorking(int w){
+        this.working=w;
     }
     
     /**
@@ -125,8 +138,7 @@ public class Motorista extends Utilizador{
     public String toString(){
         StringBuilder manz= new StringBuilder(); 
         manz.append(super.toString());
-        manz.append("Grau de comprimento de horário- " +this.pontualidade);
-        manz.append("Classificaçao- "+this.classificacao);
+        manz.append("Classificaçao: "+this.classificacao+"\n");
         return manz.toString();
     }
     

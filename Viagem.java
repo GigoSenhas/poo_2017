@@ -6,58 +6,62 @@
  */
 
 public class Viagem{
-    private double xI,yI;
-    private double xF,yF;
+    private String cl;
+    private String mt;
+    private Coordenadas origem;
+    private Coordenadas destino;
+    private double preco;
     
     public Viagem (){
-        xI = yI =xF =yF=0;
+        this.cl = "n/a";
+        this.mt= "n/a";
+        this.origem=new Coordenadas();
+        this.destino=new Coordenadas();
+        this.preco=0.0;
     }
     
-    public Viagem(double xI,double yI,double xF,double yF){
-        this.xI = xI;
-        this.xF = xF;
-        this.yI = yI;
-        this.yF = yF;
+    public Viagem(String cl,String mt,Coordenadas inicio,Coordenadas fim,double preco){
+        this.cl = cl;
+        this.mt= mt;
+        this.origem=inicio;
+        this.destino=fim;
+        this.preco=preco;
     }
     
     public Viagem(Viagem f){
-        this.xI = f.getXI();
-        this.xF = f.getXF();
-        this.yI = f.getYI();
-        this.yF = f.getYF();
+        this.cl=getCl();
+        this.mt= getMt();
+        this.origem=f.getOrigem();
+        this.destino=f.getDestino();
+        this.preco=f.getPreco();
     }
     
-    public void setXI(double xI){
-        
-        this.xI = xI;
+    public void setOrigem(Coordenadas inicio){
+        this.origem=inicio;
     }
     
-    public void setYI(double yI){
-        this.yI = yI;
+    public void setDestino(Coordenadas fim){
+        this.destino=fim;
     }
     
-    public void setXF(double xF){
-        this.xF = xF;
+    public String getCl(){
+        return this.cl;
     }
     
-    public void setYF(double yF){
-        this.yF = yF;
+    public String getMt(){
+        return this.mt;
     }
     
-    public double getXI(){
-        return this.xI;
+    public Coordenadas getOrigem(){
+        return this.origem;
     }
     
-    public double getXF(){
-        return this.xF;
+    public Coordenadas getDestino(){
+        return this.destino;
     }
     
-    public double getYI(){
-        return this.yI;
-    }
-    
-    public double getYF(){
-        return this.yF;
+    public double getPreco(){
+        return this.preco;
     }
     
     public boolean equals(Object o){
@@ -71,7 +75,7 @@ public class Viagem{
      
      Viagem f = (Viagem) o;
      
-     if(f.getXI()==xI && f.getXF()==xF && f.getYI()==yI && f.getYF()==yF);
+     if(f.getOrigem()==origem && f.getDestino()==destino);
             return true;
     }
     
@@ -80,19 +84,21 @@ public class Viagem{
     }
     
     public double KmFeitos(){
-         
-        double kms;
-        double x = Math.pow ((this.getXF()-this.getXI()),2);
-        double y = Math.pow ((this.getYF()-this.getYI()),2);
-        kms = Math.sqrt(x+y);
-        return kms;
+        double dist;
+        double x = Math.pow ((this.origem.getX()-this.destino.getX()),2);
+        double y = Math.pow ((this.origem.getY()-this.destino.getY()),2);
+        dist = Math.sqrt(x+y);
+        return dist;
     }
     
     public String toString(){
         StringBuilder sb= new StringBuilder();
-        sb.append("Posição inicial: X: "+this.xI+" ;Y: "+this.yI);
-        sb.append("Posição final: X: "+this.xF+" ;Y: "+this.yF);
-        sb.append("KilometrosFeitos: "+ KmFeitos());
+        sb.append("Cliente: "+this.cl.toString()+"\n");
+        sb.append("Motorista: "+this.mt.toString()+"\n");
+        sb.append("Posição inicial: "+this.origem.toString()+"\n");
+        sb.append("Posição final: "+this.destino.toString()+"\n");
+        sb.append("KilometrosFeitos: "+ KmFeitos()+"\n");
+        sb.append("Preço da Viagem: "+this.preco+"\n");
         
         return sb.toString();
     }

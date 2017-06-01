@@ -14,12 +14,12 @@ public class NoveLugares extends Viatura{
         
     }
     
-    public NoveLugares(String matricula,int disp,double velocidade,double precoB,double fiabilidade,int lugares,Coordenadas pt){
-       super(matricula,disp,velocidade,precoB,fiabilidade,lugares,pt);
+    public NoveLugares(String matricula,int disp,double velocidade,double precoB,double fiabilidade,int lugares,int priv,Coordenadas pt){
+       super(matricula,disp,velocidade,precoB,fiabilidade,lugares,priv,pt);
     }
     
     public NoveLugares(NoveLugares m){
-        super(m.getMatricula(),m.getUtil(),m.getVelocidade(),m.getPreco(),m.getFiabilidade(),m.getLugares(),m.getCoord());
+        super(m.getMatricula(),m.getUtil(),m.getVelocidade(),m.getPreco(),m.getFiabilidade(),m.getLugares(),m.getPriv(),m.getCoord());
     }
 
     /**

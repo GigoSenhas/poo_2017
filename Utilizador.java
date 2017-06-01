@@ -100,12 +100,11 @@ public abstract class Utilizador{
      public String toString(){
         StringBuilder estranho=new StringBuilder();
         
-        estranho.append("Código: "+this.codigo);
         estranho.append("Email: "+ this.email);
-        estranho.append("Nome: "+ this.nome);
-        estranho.append("Password: "+ this.password);
-        estranho.append("Data de Nascimento: "+ this.dataNascimento);
-        estranho.append("Morada: "+this.morada);
+        estranho.append("Nome: "+ this.nome +"\n");
+        estranho.append("Password: "+ this.password + "\n");
+        estranho.append("Data de Nascimento: "+ this.dataNascimento +"\n");
+        estranho.append("Morada: "+this.morada + "\n");
         
         return estranho.toString();
     }
@@ -126,8 +125,5 @@ public abstract class Utilizador{
                 && teste.getDataNasci().equals(dataNascimento)  && teste.getMorada().equals(morada);
     }
     
-    public Utilizador clone(){
-        return new Utilizador(this);
-    }
     */
 }

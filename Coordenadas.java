@@ -74,4 +74,12 @@ public class Coordenadas{
         
         return this.x == pt.getX() && this.y == pt.getY();
     }
+    
+    public String toString(){
+        StringBuilder sb= new StringBuilder();
+        sb.append("Posição X: "+this.getX()+"\n");
+        sb.append("Posição Y: "+this.getY()+"\n");
+        
+        return sb.toString();
+    }
 }

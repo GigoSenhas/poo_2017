@@ -15,12 +15,12 @@ public class Moto extends Viatura{
         super();
     }
     
-    public Moto(String matricula,int disp,double velocidade,double precoB,double fiabilidade,int lugares,Coordenadas pt){
-       super(matricula,disp,velocidade,precoB,fiabilidade,lugares,pt);
+    public Moto(String matricula,int disp,double velocidade,double precoB,double fiabilidade,int lugares,int priv,Coordenadas pt){
+       super(matricula,disp,velocidade,precoB,fiabilidade,lugares,priv,pt);
     }
 
     public Moto(Moto m){
-        super(m.getMatricula(),m.getUtil(),m.getVelocidade(),m.getPreco(),m.getFiabilidade(),m.getLugares(),m.getCoord());
+        super(m.getMatricula(),m.getUtil(),m.getVelocidade(),m.getPreco(),m.getFiabilidade(),m.getLugares(),m.getPriv(),m.getCoord());
     }
 
     /**

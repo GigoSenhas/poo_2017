@@ -6,12 +6,12 @@
  * @version (número de versão ou data)
  */
 public class Ligeiro extends Viatura{
-    public Ligeiro(String matricula,int disp,double velocidade,double precoB,double fiabilidade,int lugares,Coordenadas pt){
-       super(matricula,disp,velocidade,precoB,fiabilidade,lugares,pt);
+    public Ligeiro(String matricula,int disp,double velocidade,double precoB,double fiabilidade,int lugares,int priv,Coordenadas pt){
+       super(matricula,disp,velocidade,precoB,fiabilidade,lugares,priv,pt);
     }
 
     public Ligeiro(Ligeiro m){
-        super(m.getMatricula(),m.getUtil(),m.getVelocidade(),m.getPreco(),m.getFiabilidade(),m.getLugares(),m.getCoord());
+        super(m.getMatricula(),m.getUtil(),m.getVelocidade(),m.getPreco(),m.getFiabilidade(),m.getLugares(),m.getPriv(),m.getCoord());
     }
 
     /**

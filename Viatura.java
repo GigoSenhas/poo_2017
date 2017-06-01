@@ -13,6 +13,7 @@ public abstract class Viatura{
     private double precoBase;
     private double fiabilidade;
     private int lugares;
+    private int privado;
     private Coordenadas local;
     
 
@@ -26,21 +27,23 @@ public abstract class Viatura{
         this.precoBase=0.0;
         this.fiabilidade=0.0;
         this.lugares=0;
+        this.privado=0;
         this.local= new Coordenadas(0,0);
     }
     
-    public Viatura(String matricula,int util,double velocidadeM,double preco,double fiabilidade,int lugares,Coordenadas pt){
+    public Viatura(String matricula,int util,double velocidadeM,double preco,double fiabilidade,int lugares,int priv,Coordenadas pt){
         this.matricula=matricula;
         this.utilizado=util;
         this.velocidadeM=velocidadeM;
         this.precoBase=preco;
         this.fiabilidade=fiabilidade;
+        this.privado=priv;
         this.lugares=lugares;
         this.local=pt;
     }
     
     public Viatura(Viatura f){
-        this(f.getMatricula(),f.getUtil(),f.getVelocidade(),f.getPreco(),f.getFiabilidade(),f.getLugares(),f.getCoord());
+        this(f.getMatricula(),f.getUtil(),f.getVelocidade(),f.getPreco(),f.getFiabilidade(),f.getLugares(),f.getPriv(),f.getCoord());
     }
 
     /**
@@ -70,6 +73,10 @@ public abstract class Viatura{
     
     public int getLugares(){
         return this.lugares;
+    }
+    
+    public int getPriv(){
+        return this.privado;
     }
     
     public Coordenadas getCoord(){
@@ -102,6 +109,10 @@ public abstract class Viatura{
     
     public void setCoordenadas(Coordenadas pt){
         this.local=pt;
+    }
+    
+    public void setPrivado(int priv){
+        this.privado=priv;
     }
     
      /**

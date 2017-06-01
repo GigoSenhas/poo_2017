@@ -37,15 +37,15 @@ public class Umer {
    }
    
    
-   public boolean verificaUtilizador(String email){
+   public boolean verificaUtilizador(String email,String pass){
        for ( Cliente c: this.clientes){
-           if(c.getEmail().equals(email)){ 
+           if(c.getEmail().equals(email)&& c.getPassword().equals(pass)){ 
                return true;
             }
        }
     
        for( Motorista d: this.motoristas){
-            if(d.getEmail().equals(email)) {
+            if(d.getEmail().equals(email)&&d.getPassword().equals(pass)) {
                 return true;
             }
        }
@@ -120,10 +120,16 @@ public class Umer {
         }
     }
    
-   public void addTriptohist(String email,Viagem f){
+   public void addTriptohist(String email,Viagem f,String motorista){
        for(Cliente c: clientes){
            if(c.getEmail().equals(email)){
                c.addViagem(f);
+            }
+        }
+       
+       for(Motorista m:motoristas){
+           if(m.getEmail().equals(motorista)){
+               m.addViagem(f);
             }
         }
    }
@@ -146,6 +152,14 @@ public class Umer {
     }
     
    public void apresentaCarrosDisponiveis(){
+       for(Viatura m: veiculos){
+           if(m.getUtil()==0 && m.getPriv()!=0){
+               System.out.println(m.toString());
+           }
+       }
+   }
+   
+   public void apresentaCarrosworking(){
        for(Viatura m: veiculos){
            if(m.getUtil()==0){
                System.out.println(m.toString());
@@ -173,6 +187,7 @@ public class Umer {
        for(Motorista m: motoristas){
            if(m.getEmail().equals(email)){
                m.comecarTrab(mat);
+               m.setWorking(1);
                setOFFCarro(mat);
             }
         }
@@ -189,6 +204,7 @@ public class Umer {
        for(Motorista m: motoristas){
            if(m.getEmail().equals(email)){
                m.pararTrab();
+               m.setWorking(0);
                carro=m.getCarro();
                setONCarro(carro);
             }
@@ -207,12 +223,78 @@ public class Umer {
        double result= Double.MAX_VALUE;
        Viatura v=null;
        for(Viatura m:veiculos){
-           if(Coordenadas.calculaDistancia(cliente,m.getCoord()) <  result){
+           System.out.println(m.getMatricula());
+           System.out.println((Coordenadas.calculaDistancia(cliente,m.getCoord()) < result) +" "+ (m.getUtil()==0));
+           if(Coordenadas.calculaDistancia(cliente,m.getCoord()) <  result && m.getUtil()==0){
                result = Coordenadas.calculaDistancia(cliente,m.getCoord());
-               v= m;
+               System.out.println("Distancia:"+result);
+               v = m;
             }
         }
-        return v;
+       return v;
+   }
+   
+   public double getTempomaisprox(Coordenadas cliente){
+       double tempo= Double.MAX_VALUE;
+       for(Viatura m:veiculos){
+           if(Coordenadas.calculaDistancia(cliente,m.getCoord()) <  tempo && m.getUtil()==0){
+               tempo = m.getVelocidade()/Coordenadas.calculaDistancia(cliente,m.getCoord());
+            }
+        }
+       return tempo;
+   }
+   
+   public double getTempoTaxi(Coordenadas spotcl,Viatura m){
+       return (m.getVelocidade()/Coordenadas.calculaDistancia(spotcl,m.getCoord()));
     }
+   
+   public double getTimeTrip(String matricula, Coordenadas dist,Coordenadas distf){
+       double velocidade=Double.MIN_VALUE;
+       double tempo=Double.MIN_VALUE;
+       for(Viatura m:veiculos){
+           if(m.getMatricula().equals(matricula)){
+               velocidade = m.getVelocidade();
+            }
+        }
+       
+       double calc=Coordenadas.calculaDistancia(dist,distf);
+       tempo = calc/velocidade;
+        
+       return tempo;
+   }
+   
+   public double getPrecoViagem(Coordenadas docliente,Coordenadas finais,String mat){
+       double price=Double.MAX_VALUE;
+       Viatura cenas=null;
+       for(Viatura popo:veiculos){
+           if (popo.getMatricula().equals(mat)){
+               cenas=popo;
+            }
+        }
+       
+       
+       price= cenas.getPreco() * (Coordenadas.calculaDistancia(docliente,finais));
+       
+       return price;
+   }
+   
+   public String getMotoristaViagem(Viatura f){
+       String mat = f.getMatricula();
+       String email = null;
+       for(Motorista mor : motoristas){
+           if(mor.getCarro().equals(mat)){
+               email=mor.getEmail();
+            }
+        }
+       return email;
+   }
+   
+   public void atualizaClassif(int nota,String motorista){
+       for(Motorista m: motoristas){
+           if(m.getEmail().equals(motorista)){
+               m.setClassif(nota);
+            }
+        }
+   }
 }
 

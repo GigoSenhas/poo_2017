@@ -43,30 +43,23 @@ public class Menu {
  
         out.println("Insira o seu email:");
         email = scan.next().trim();
-        
-        if (!(umer.verificaUtilizador(email))) {
-            out.println("Email inválido!");
-            menu();
+        out.println("Insira a sua password:");
+        password = scan.next();
+        if (!(umer.verificaUtilizador(email,password))) {
+            out.println("Oops, email ou password inválida");
+            login();
         } 
         
-        else {
-            out.println("Insira a sua password:");
-            password = scan.next();
-            if (!(umer.verificaPassword(password))) {
-                out.println("Password errada! ");
-                menu();
-            } 
             
-            else {
-                int getTipe=umer.doTipo(email);
-                out.println("Está agora online");
-                if(getTipe==1){
-                    menuafterlogCliente(email);
-                }
+        else {
+            int getTipe=umer.doTipo(email);
+            out.println("Está agora online");
+            if(getTipe==1){
+                menuafterlogCliente(email);
+            }
                 
-                if(getTipe==2){
-                    menuafterlogMotorista(email);
-                }
+            if(getTipe==2){
+                menuafterlogMotorista(email);
             }
         }
     }
@@ -87,7 +80,6 @@ public class Menu {
         if (op==1) {
                 umer.getListaViagens(email,1);
                 menuafterlogCliente(email);
-                
         }
         
         if (op==2) {
@@ -108,22 +100,39 @@ public class Menu {
             out.println("(2)-Escolher viatura");
             lop=scan.nextInt();
             Coordenadas spotcl = new Coordenadas(x,y);
+            Coordenadas spotfinal = new Coordenadas(fx,fy);
+            double distfinal = Coordenadas.calculaDistancia(spotcl,spotfinal);
             if(lop==1){
                 Viatura lindo=umer.getViaturamaisprox(spotcl);
-                out.println("Distancia"+ lindo.toString());
-                menuafterlogCliente(email);
+                double tempo= umer.getTempomaisprox(spotcl);
+                String mtDAviagem = umer.getMotoristaViagem(lindo);
+                double dura= umer.getTimeTrip(lindo.getMatricula(),spotcl,spotfinal);
+                double preco= umer.getPrecoViagem(spotcl,spotfinal,lindo.getMatricula());
+                Viagem nova = new Viagem(email,mtDAviagem,spotcl,spotfinal,preco);
+                out.println("Viatura in coming:\n"+ lindo.toString());
+                out.println("Tempo para o taxi chegar a si: " + tempo);
+                umer.addTriptohist(email,nova,mtDAviagem);
+                teladeClass(mtDAviagem,dura,preco,email);
             }
             
             if(lop==2){
-                umer.apresentaMotoristasDisp();
+                umer.apresentaCarrosworking();
                 String linda;
                 out.println("Digite a matricula da viatura que pretende utilizar:");
                 linda=scan.next();
                 int ver=umer.verificaMatricula(linda);
-                if(op==1){
-                    Viagem trip=new Viagem(x,y,fx,fy);
-                    umer.addTriptohist(email,trip);
-                    menuafterlogCliente(email);
+                if(ver==1){
+                    Viatura m=umer.buscaViatura(linda);
+                    double dura= umer.getTimeTrip(linda,spotcl,spotfinal);
+                    double preco= umer.getPrecoViagem(spotcl,spotfinal,linda);
+                    double time= umer.getTempoTaxi(spotcl,m);
+                    String mtDAviagem = umer.getMotoristaViagem(m);
+                    Viagem trip=new Viagem(email,mtDAviagem,spotcl,spotfinal,preco);
+                    out.println(trip.toString());
+                    out.println("Viatura in coming:\n"+ m.toString());
+                    out.println("Tempo para o taxi chegar a si: " + time);
+                    umer.addTriptohist(email,trip,mtDAviagem);
+                    teladeClass(mtDAviagem,dura,preco,email);
                 }
                 
                 else{
@@ -144,6 +153,19 @@ public class Menu {
             out.println("Opção inválida");
             menuafterlogCliente(email);
         }
+    }
+    
+    public void teladeClass(String motorista, double dura,double preco,String email){
+        int nota;
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Duração da Viagem: " +dura);
+        System.out.println("Motorista: "+ motorista);
+        System.out.println("Preço: "+preco);
+        System.out.println("Dar uma nota ao motorista (0-100):");
+        nota=scan.nextInt();
+        
+        umer.atualizaClassif(nota,motorista);
+        menuafterlogCliente(email);
     }
     
     public void menuafterlogMotorista(String email){
@@ -278,7 +300,7 @@ public class Menu {
         out.println("Dia:");
         dia = scan.nextInt();
         dataNascimento = LocalDate.of(ano, mes, dia);
-        Motorista m = new Motorista("MT",email, nome, password, dataNascimento,morada,null,0,0,0.0,null);
+        Motorista m = new Motorista("MT",email, nome, password, dataNascimento,morada,null,0,0,0.0,0,null);
         umer.adicionaMotorista(m);
         out.println("Conta criada");
         menu();
@@ -345,7 +367,7 @@ public class Menu {
             }
             
             else{
-                Moto moto = new Moto(mat,1,velocidadeMedia, precoBaseporKm,0.0,lugs,new Coordenadas(x,y));
+                Moto moto = new Moto(mat,0,velocidadeMedia, precoBaseporKm,0.0,lugs,0,new Coordenadas(x,y));
                 out.println("Veiculo Criado");
                 umer.adicionaVeiculo(moto);
                 umer.mtcriou(email,mat);
@@ -379,7 +401,7 @@ public class Menu {
             }
             
             else{
-                Ligeiro ligeiro = new Ligeiro(mat,1,velocidadeMedia, precoBaseporKm,0.0,lugs,new Coordenadas(x,y));
+                Ligeiro ligeiro = new Ligeiro(mat,0,velocidadeMedia, precoBaseporKm,0.0,lugs,0,new Coordenadas(x,y));
                 out.println("Veiculo Criado");
                 umer.adicionaVeiculo(ligeiro);
                 umer.mtcriou(email,mat);
@@ -404,7 +426,7 @@ public class Menu {
             x=scan.nextDouble();
             out.println("Y:");
             y=scan.nextDouble();
-            NoveLugares carrinha = new NoveLugares(mat,1,velocidadeMedia, precoBaseporKm,0.0,9,new Coordenadas(x,y));
+            NoveLugares carrinha = new NoveLugares(mat,0,velocidadeMedia, precoBaseporKm,0.0,9,0,new Coordenadas(x,y));
             out.println("Veiculo Criado");
             umer.adicionaVeiculo(carrinha);
             umer.mtcriou(email,mat);
