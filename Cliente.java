@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.time.LocalDate;
+import java.io.*;
 /**
  * Escreva a descrição da classe Cliente aqui.
  * 
@@ -7,7 +8,7 @@ import java.time.LocalDate;
  * @version (número de versão ou data)
  */
 
-public class Cliente extends Utilizador{
+public class Cliente extends Utilizador implements Serializable{
     //Variáveis de instância
     private ArrayList<Viagem> viagens;
     

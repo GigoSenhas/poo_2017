@@ -1,11 +1,12 @@
 import java.time.LocalDate;
+import java.io.*;
 /**
  * Escreva a descrição da classe Utilizador aqui.
  * 
  * @author 
  * @version 1;
  */
-public abstract class Utilizador{
+public abstract class Utilizador implements Serializable{
     // variáveis de instância
     private String codigo;
     private String email;

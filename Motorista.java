@@ -2,13 +2,14 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.time.LocalDate;
+import java.io.*;
 /**
  * Escreva a descrição da classe Motorista aqui.
  * 
  * @author (seu nome) 
  * @version (número de versão ou data)
  */
-public class Motorista extends Utilizador{
+public class Motorista extends Utilizador implements Serializable{
     // variáveis de instância - substitua o exemplo abaixo pelo seu próprio
     private String carro;
     private int pontualidade;

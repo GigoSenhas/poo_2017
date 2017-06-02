@@ -1,14 +1,17 @@
- 
 import static java.lang.Boolean.FALSE;
 import static java.lang.System.out;
 import java.time.LocalDate;
 import java.util.Scanner;
 import java.util.*;
 import java.lang.String;
+import java.io.*;
  
-public class Menu {
+public class Menu implements Serializable{
  
     Umer umer = new Umer();
+    private List<Cliente> clientes = new ArrayList<>();
+    private List<Motorista> motoristas = new ArrayList<>();
+    private List<Viatura> viaturas = new ArrayList<>();
  
     public void menu() {
         Scanner entrada = new Scanner(System.in);
@@ -20,15 +23,20 @@ public class Menu {
         System.out.println("(0)- Sair");
         out.println("--------------");
         menu = entrada.nextInt();
- 
         if (menu == 1) {
+            loadEstado();
             login();
         }
         
         if (menu == 2) {
+            loadEstado();
             registo();
         }
         
+        if (menu==0){
+            guardaEstado();
+            System.exit(1);
+        }
         if (!((menu == 1) || (menu == 2) || (menu == 0))) {
             System.out.println("Opção inválida");
             menu();
@@ -269,6 +277,7 @@ public class Menu {
         dataNascimento = LocalDate.of(ano, mes, dia);
         Cliente c = new Cliente("CL",email, nome, password, dataNascimento, morada,null);
         umer.adicionaCliente(c);
+        this.clientes.add(c);
         menu();
     }
  
@@ -302,6 +311,7 @@ public class Menu {
         dataNascimento = LocalDate.of(ano, mes, dia);
         Motorista m = new Motorista("MT",email, nome, password, dataNascimento,morada,null,0,0,0.0,0,null);
         umer.adicionaMotorista(m);
+        this.motoristas.add(m);
         out.println("Conta criada");
         menu();
     }
@@ -370,6 +380,7 @@ public class Menu {
                 Moto moto = new Moto(mat,0,velocidadeMedia, precoBaseporKm,0.0,lugs,0,new Coordenadas(x,y));
                 out.println("Veiculo Criado");
                 umer.adicionaVeiculo(moto);
+                this.viaturas.add(moto);
                 umer.mtcriou(email,mat);
                 menuafterlogMotorista(email);
             }
@@ -404,6 +415,7 @@ public class Menu {
                 Ligeiro ligeiro = new Ligeiro(mat,0,velocidadeMedia, precoBaseporKm,0.0,lugs,0,new Coordenadas(x,y));
                 out.println("Veiculo Criado");
                 umer.adicionaVeiculo(ligeiro);
+                this.viaturas.add(ligeiro);
                 umer.mtcriou(email,mat);
                 menuafterlogMotorista(email);
             }
@@ -429,6 +441,7 @@ public class Menu {
             NoveLugares carrinha = new NoveLugares(mat,0,velocidadeMedia, precoBaseporKm,0.0,9,0,new Coordenadas(x,y));
             out.println("Veiculo Criado");
             umer.adicionaVeiculo(carrinha);
+            this.viaturas.add(carrinha);
             umer.mtcriou(email,mat);
             menuafterlogMotorista(email);
         }
@@ -442,6 +455,40 @@ public class Menu {
        if(op!=1 || op!=2){
            out.println("Opção inválida");
            
+        }
+    }
+    
+    public void guardaEstado (){
+       
+        try{
+            ObjectOutputStream oout = new ObjectOutputStream(new FileOutputStream("estado"));
+            oout.writeObject(clientes);
+            oout.writeObject(motoristas);
+            oout.writeObject(viaturas);
+            oout.writeObject(umer);
+            oout.flush();
+            oout.close();
+        }
+        catch (IOException e) {
+            out.println("Erro na escrita do ficheiro!");
+            System.exit(1);
+        }
+    }
+   
+    public void loadEstado() {
+        try {
+            ObjectInputStream oin = new ObjectInputStream(new FileInputStream("estado"));
+            clientes = (List<Cliente>) oin.readObject();
+            motoristas = (List<Motorista>) oin.readObject();
+            viaturas = (List<Viatura> ) oin.readObject();
+            umer = (Umer) oin.readObject();
+            oin.close();
+        } catch (IOException e) {
+            out.println("Erro na leitura do ficheiro!");
+            System.exit(1);
+        } catch (ClassNotFoundException e) {
+            out.println("Uma classe não foi encontrada!");
+            System.exit(3);
         }
     }
 }

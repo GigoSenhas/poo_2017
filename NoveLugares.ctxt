@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.params=
+comment0.target=NoveLugares()
+comment0.text=\n\ COnstrutor\ para\ objetos\ da\ classe\ NoveLugares\n
+comment1.params=matricula\ disp\ velocidade\ precoB\ fiabilidade\ lugares\ priv\ pt
+comment1.target=NoveLugares(java.lang.String,\ int,\ double,\ double,\ double,\ int,\ int,\ Coordenadas)
+comment2.params=m
+comment2.target=NoveLugares(NoveLugares)
+comment3.params=o
+comment3.target=boolean\ equals(java.lang.Object)
+comment3.text=\n\ M\u00E9todos\n
+comment4.params=
+comment4.target=NoveLugares\ clone()
+comment5.params=
+comment5.target=java.lang.String\ toString()
+numComments=6

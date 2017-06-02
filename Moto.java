@@ -1,11 +1,11 @@
-
+import java.io.*;
 /**
  * Escreva a descrição da classe Moto aqui.
  * 
  * @author (seu nome) 
  * @version (número de versão ou data)
  */
-public class Moto extends Viatura{
+public class Moto extends Viatura implements Serializable{
     // variáveis de instância - substitua o exemplo abaixo pelo seu próprio
 
     /**
@@ -26,6 +26,15 @@ public class Moto extends Viatura{
     /**
      * Métodos
      */
+    public boolean equals(Object o){
+        if(o==this)
+            return true;
+        if(o==null || o.getClass()!=this.getClass())
+            return false;
+        Moto m = (Moto) o;
+        return (super.equals(m));
+    }
+    
     public Moto clone(){
         return new Moto(this);
     }

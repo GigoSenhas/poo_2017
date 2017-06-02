@@ -1,15 +1,9 @@
-
-/**
- * Escreva a descrição da classe Utilizadores aqui.
- * 
- * @author (seu nome) 
- * @version (número de versão ou data)
- */
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.*;
+import java.io.*;
 
-public class Utilizadores{
+public class Utilizadores implements Serializable{
    private HashMap<String,Utilizador> utilizadores;
 
     /**

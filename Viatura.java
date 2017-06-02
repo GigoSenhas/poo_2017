@@ -1,11 +1,11 @@
-
+import java.io.*;
 /**
  * Escreva a descrição da classe Viaturas aqui.
  * 
  * @author (Bruno) 
  * @version (versão 1)
  */
-public abstract class Viatura{
+public abstract class Viatura implements Serializable{
     // variáveis de instância - substitua o exemplo abaixo pelo seu próprio
     private String matricula;
     private int utilizado;

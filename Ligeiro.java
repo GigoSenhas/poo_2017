@@ -1,11 +1,11 @@
-
+import java.io.*;
 /**
  * Escreva a descrição da classe Ligeiros aqui.
  * 
  * @author (seu nome) 
  * @version (número de versão ou data)
  */
-public class Ligeiro extends Viatura{
+public class Ligeiro extends Viatura implements Serializable{
     public Ligeiro(String matricula,int disp,double velocidade,double precoB,double fiabilidade,int lugares,int priv,Coordenadas pt){
        super(matricula,disp,velocidade,precoB,fiabilidade,lugares,priv,pt);
     }
@@ -17,6 +17,15 @@ public class Ligeiro extends Viatura{
     /**
      * Métodos
      */
+    public boolean equals(Object o){
+        if(o==this)
+            return true;
+        if(o==null || o.getClass()!=this.getClass())
+            return false;
+        Ligeiro l = (Ligeiro) o;
+        return (super.equals(l));
+    }
+    
     public Ligeiro clone(){
         return new Ligeiro(this);
     }

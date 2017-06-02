@@ -1,7 +1,7 @@
-
 import java.util.ArrayList;
+import java.io.*;
  
-public class Umer {
+public class Umer implements Serializable{
     private ArrayList <Cliente> clientes = new ArrayList<>();
     private ArrayList <Viatura> veiculos = new ArrayList<>();
     private ArrayList <Motorista> motoristas = new ArrayList<>();
@@ -100,7 +100,7 @@ public class Umer {
                        System.out.println(c.getViagens().toString());
                    }
                    else{
-                       System.out.println("Ainda não realizou nenhuma viage");
+                       System.out.println("Ainda não realizou nenhuma viagem");
                     }
                 }
             }
@@ -238,14 +238,14 @@ public class Umer {
        double tempo= Double.MAX_VALUE;
        for(Viatura m:veiculos){
            if(Coordenadas.calculaDistancia(cliente,m.getCoord()) <  tempo && m.getUtil()==0){
-               tempo = m.getVelocidade()/Coordenadas.calculaDistancia(cliente,m.getCoord());
+               tempo = Coordenadas.calculaDistancia(cliente,m.getCoord())/m.getVelocidade();
             }
         }
        return tempo;
-   }
+   } 
    
    public double getTempoTaxi(Coordenadas spotcl,Viatura m){
-       return (m.getVelocidade()/Coordenadas.calculaDistancia(spotcl,m.getCoord()));
+       return (Coordenadas.calculaDistancia(spotcl,m.getCoord())/m.getVelocidade());
     }
    
    public double getTimeTrip(String matricula, Coordenadas dist,Coordenadas distf){

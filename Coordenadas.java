@@ -1,11 +1,12 @@
 import java.util.*;
+import java.io.*;
 /**
  * Escreva a descrição da classe Coordenadas aqui.
  * 
  * @author (seu nome) 
  * @version (número de versão ou data)
  */
-public class Coordenadas{
+public class Coordenadas implements Serializable{
     // variáveis de instância - substitua o exemplo abaixo pelo seu próprio
     private double x;
     private double y;

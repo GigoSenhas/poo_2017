@@ -1,3 +1,4 @@
+import java.io.*;
 /**
  * Escreva a descrição da classe Viagem aqui.
  * 
@@ -5,7 +6,7 @@
  * @version (número de versão ou data)
  */
 
-public class Viagem{
+public class Viagem implements Serializable{
     private String cl;
     private String mt;
     private Coordenadas origem;
